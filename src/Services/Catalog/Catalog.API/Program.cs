@@ -1,5 +1,7 @@
 ﻿var builder = WebApplication.CreateBuilder(args);
+
 // 向容器中添加服务。
+// Carter包若安装在其他引用项目中则无法识别继承了ICarterModule的API
 builder.Services.AddCarter(); // 一个为ASP.NET Core最小API提供拓展功能和模块化的轻量级框架
 builder.Services.AddMediatR(config =>
 {

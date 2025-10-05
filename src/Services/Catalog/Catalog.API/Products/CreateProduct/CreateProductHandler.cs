@@ -13,7 +13,7 @@ public record CreateProductCommand(string Name,
                                    decimal Price) : ICommand<CreateProductResult>;
 
 /// <summary>
-/// 新增产品响应
+/// 新增产品结果
 /// </summary>
 public record CreateProductResult(Guid Id);
 

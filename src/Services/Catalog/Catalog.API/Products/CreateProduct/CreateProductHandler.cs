@@ -7,7 +7,7 @@ namespace Catalog.API.Products.CreateProduct;
 /// 新增产品命令
 /// </summary>
 public record CreateProductCommand(string Name,
-                                   List<string> Category,
+                                   List<string> Categories,
                                    string Description,
                                    string ImageFile,
                                    decimal Price) : ICommand<CreateProductResult>;
@@ -29,7 +29,7 @@ public class CreateProductHandler : ICommandHandler<CreateProductCommand, Create
         {
             Id = Guid.NewGuid(),
             Name = command.Name,
-            Category = command.Category,
+            Categories = command.Categories,
             Description = command.Description,
             ImageFile = command.ImageFile,
             Price = command.Price

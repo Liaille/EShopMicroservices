@@ -18,7 +18,7 @@ public class Product
     /// <summary>
     /// 类别列表
     /// </summary>
-    public List<string> Category { get; set; } = [];
+    public List<string> Categories { get; set; } = [];
 
     /// <summary>
     /// 描述

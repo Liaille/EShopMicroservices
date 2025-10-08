@@ -8,6 +8,11 @@ builder.Services.AddMediatR(config =>
     // 将此项目中的所有服务都注册到中介类库中
     config.RegisterServicesFromAssembly(typeof(Program).Assembly);
 });
+builder.Services.AddMarten(options =>
+{
+    // 配置Marten连接字符串
+    options.Connection(builder.Configuration.GetConnectionString("Database")!);
+}).UseLightweightSessions(); // 轻量级会话，移除了变更跟踪、身份映射缓存等机制
 
 var app = builder.Build();
 

@@ -12,7 +12,7 @@ internal class GetProductsQueryHandler(
 {
     public async Task<GetProductsResult> Handle(GetProductsQuery query, CancellationToken cancellationToken)
     {
-        logger.LogInformation("{ClassName}.{MethodName} call with {Query}", GetType().FullName, MethodBase.GetCurrentMethod()?.Name, query);
+        logger.LogInformation("{ClassName}.{MethodName} call with {Query}", GetType().FullName, nameof(Handle), query);
 
         var products = await session.Query<Product>().ToListAsync(cancellationToken);
 

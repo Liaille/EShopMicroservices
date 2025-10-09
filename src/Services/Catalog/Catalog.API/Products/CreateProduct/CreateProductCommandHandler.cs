@@ -20,7 +20,7 @@ public class CreateProductCommandValidator : AbstractValidator<CreateProductComm
     {
         RuleFor(x => x.Name)
             .NotEmpty().WithMessage("产品名称不能为空")
-            .MaximumLength(100).WithMessage("产品名称不能超过100个字符");
+            .Length(2, 100).WithMessage("产品名称不能少于2个字符或超过100个字符");
         RuleFor(x => x.Categories)
             .NotEmpty().WithMessage("产品类别不能为空")
             .Must(categories => categories.All(c => !string.IsNullOrWhiteSpace(c)))

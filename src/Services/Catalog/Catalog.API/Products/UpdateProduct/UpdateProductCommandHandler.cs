@@ -46,7 +46,7 @@ internal class UpdateProductCommandHandler(IDocumentSession session,
         if (product is null)
         {
             logger.LogWarning("Product with Id {ProductId} not found.", command.Id);
-            throw new ProductNotFoundException($"Product with Id {command.Id} not found.");
+            throw new ProductNotFoundException(command.Id);
         }
 
         product.Name = command.Name;

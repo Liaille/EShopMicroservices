@@ -17,7 +17,7 @@ internal class GetProductByIdQueryHandler(
         if (product is null)
         {
             logger.LogWarning("Product with Id {ProductId} not found.", query.Id);
-            throw new KeyNotFoundException($"Product with Id {query.Id} not found.");
+            throw new ProductNotFoundException(query.Id);
         }
 
         return new GetProductByIdResult(product);

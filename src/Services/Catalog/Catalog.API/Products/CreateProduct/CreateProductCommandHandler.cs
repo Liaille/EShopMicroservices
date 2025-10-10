@@ -39,13 +39,10 @@ public class CreateProductCommandValidator : AbstractValidator<CreateProductComm
 /// <summary>
 /// 应用程序逻辑层
 /// </summary>
-internal class CreateProductCommandHandler(IDocumentSession session,
-                                           ILogger<CreateProductCommandHandler> logger) : ICommandHandler<CreateProductCommand, CreateProductResult>
+internal class CreateProductCommandHandler(IDocumentSession session) : ICommandHandler<CreateProductCommand, CreateProductResult>
 {
     public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
     {
-        logger.LogInformation("{ClassName}.{MethodName} call with {Command}", GetType().FullName, nameof(Handle), command);
-
         #region 从命令对象创建产品实体
         Product product = new()
         {

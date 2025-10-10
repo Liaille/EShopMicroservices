@@ -12,6 +12,8 @@ builder.Services.AddMediatR(config =>
     config.RegisterServicesFromAssembly(assembly);
     // 将验证行为添加到MediatR的管道中
     config.AddOpenBehavior(typeof(ValidationBehavior<,>));
+    // 将日志行为添加到MediatR的管道中
+    config.AddOpenBehavior(typeof(LoggingBehavior<,>));
 });
 // 注册FluentValidation验证器
 builder.Services.AddValidatorsFromAssembly(assembly);

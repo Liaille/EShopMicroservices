@@ -1,12 +1,15 @@
 ﻿using BuildingBlocks.Behaviors;
 using BuildingBlocks.Exceptions.Handler;
 using Catalog.API.Data;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // 向容器中添加服务。
 // 注册MediatR中介类库
 var assembly = typeof(Program).Assembly;
+string dbConnectionString = builder.Configuration.GetConnectionString("Database")!;
 builder.Services.AddMediatR(config =>
 {
     // 将此项目中的所有服务都注册到中介类库中
@@ -25,7 +28,7 @@ builder.Services.AddCarter();
 builder.Services.AddMarten(options =>
 {
     // 配置Marten连接字符串
-    options.Connection(builder.Configuration.GetConnectionString("Database")!);
+    options.Connection(dbConnectionString);
 }).UseLightweightSessions(); // 轻量级会话，移除了变更跟踪、身份映射缓存等机制
 // 注册全局异常处理
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
@@ -36,6 +39,9 @@ if (builder.Environment.IsDevelopment())
     builder.Services.InitializeMartenWith<CatalogInitialData>();
 }
 
+// 注册健康检查服务
+builder.Services.AddHealthChecks().AddNpgSql(dbConnectionString);
+
 var app = builder.Build();
 
 // 配置HTTP请求管道。
@@ -43,5 +49,11 @@ app.MapCarter();
 // 使用全局异常处理中间件
 // 此处因BUG，必须传入一个空的options委托，否则生成时会抛出异常
 app.UseExceptionHandler(options => { });
+// 配置健康检查端点
+app.UseHealthChecks("/health", new HealthCheckOptions
+{
+    // 使用HealthCheckUIResponseWriter来格式化健康检查的响应
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
 
 app.Run();

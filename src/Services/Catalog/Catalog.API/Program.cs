@@ -1,5 +1,6 @@
 ﻿using BuildingBlocks.Behaviors;
 using BuildingBlocks.Exceptions.Handler;
+using Catalog.API.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +29,12 @@ builder.Services.AddMarten(options =>
 }).UseLightweightSessions(); // 轻量级会话，移除了变更跟踪、身份映射缓存等机制
 // 注册全局异常处理
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+
+if (builder.Environment.IsDevelopment())
+{
+    // 在开发环境中，初始化Marten数据库并添加种子数据
+    builder.Services.InitializeMartenWith<CatalogInitialData>();
+}
 
 var app = builder.Build();
 

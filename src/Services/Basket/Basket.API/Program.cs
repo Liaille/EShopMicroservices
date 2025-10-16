@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCarter();
 // 注册MediatR中介类库
 var assembly = typeof(Program).Assembly;
+string dbConnectionString = builder.Configuration.GetConnectionString("Database")!;
 builder.Services.AddMediatR(config =>
 {
     // 将此项目中的所有服务都注册到中介类库中
@@ -21,6 +22,14 @@ builder.Services.AddMediatR(config =>
 builder.Services.AddValidatorsFromAssembly(assembly);
 // 注册全局异常处理
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+// 注册PostgreSQL的Marten文档数据库
+builder.Services.AddMarten(options =>
+{
+    // 配置Marten连接字符串
+    options.Connection(dbConnectionString);
+    // 因ShoppingCart没有Id属性，需手动配置主键
+    options.Schema.For<ShoppingCart>().Identity(x => x.UserName);
+}).UseLightweightSessions(); // 轻量级会话，移除了变更跟踪、身份映射缓存等机制
 
 var app = builder.Build();
 // 配置HTTP请求管道。

@@ -1,5 +1,5 @@
 ﻿namespace Basket.API.Basket.CheckoutBasket;
 
-public class CheckoutBasketCommandHandler
+internal class CheckoutBasketCommandHandler
 {
 }

@@ -5,3 +5,4 @@ global using MediatR;
 global using BuildingBlocks.CQRS;
 global using FluentValidation;
 global using Marten;
+global using Basket.API.Data;

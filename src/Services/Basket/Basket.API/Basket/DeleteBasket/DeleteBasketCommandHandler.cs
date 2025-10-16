@@ -12,11 +12,12 @@ public class DeleteBasketCommandValidator : AbstractValidator<DeleteBasketComman
     }
 }
 
-internal class DeleteBasketCommandHandler : ICommandHandler<DeleteBasketCommand, DeleteBasketResult>
+internal class DeleteBasketCommandHandler(IBasketRepository repository) : ICommandHandler<DeleteBasketCommand, DeleteBasketResult>
 {
     public async Task<DeleteBasketResult> Handle(DeleteBasketCommand command, CancellationToken cancellationToken)
     {
-        // TODO: 从数据库和缓存中删除用户的购物车
+        await repository.DeleteShoppingCartAsync(command.UserName, cancellationToken);
+        // TODO: 从缓存中删除用户的购物车
         return new DeleteBasketResult(true);
     }
 }

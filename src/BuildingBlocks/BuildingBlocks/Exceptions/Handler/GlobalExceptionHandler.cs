@@ -11,6 +11,10 @@ public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger) : Mi
     {
         logger.LogError("Error Message: {exceptionMessage}, Time of occurrence {time}", exception.Message, DateTime.UtcNow);
 
+        // 展开AggregateException
+        if (exception is AggregateException aggEx && aggEx.InnerException is not null)
+            exception = aggEx.InnerException;
+
         (string Detail, string Title, int StatusCode) = exception switch
         {
             InternalServerException =>

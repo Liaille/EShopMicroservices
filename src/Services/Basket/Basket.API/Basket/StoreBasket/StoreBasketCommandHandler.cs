@@ -18,8 +18,8 @@ internal class StoreBasketCommandHandler(IBasketRepository repository) : IComman
 {
     public async Task<StoreBasketResult> Handle(StoreBasketCommand command, CancellationToken cancellationToken)
     {
+        // 将数据库和缓存操作交由仓储处理
         await repository.UpsertShoppingCartAsync(command.Cart, cancellationToken);
-        // TODO: 更新缓存
 
         return new StoreBasketResult(command.Cart.UserName);
     }

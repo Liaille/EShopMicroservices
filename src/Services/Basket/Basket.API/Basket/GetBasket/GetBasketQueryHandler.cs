@@ -8,6 +8,7 @@ internal class GetBasketQueryHandler(IBasketRepository repository) : IQueryHandl
 {
     public async Task<GetBasketResult> Handle(GetBasketQuery query, CancellationToken cancellationToken)
     {
+        // 将数据库和缓存操作交由仓储处理
         var cart = await repository.GetShoppingCartAsync(query.UserName, cancellationToken);
         return new GetBasketResult(cart);
     }

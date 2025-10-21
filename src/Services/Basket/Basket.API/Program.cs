@@ -32,6 +32,20 @@ builder.Services.AddMarten(options =>
 }).UseLightweightSessions(); // 轻量级会话，移除了变更跟踪、身份映射缓存等机制
 // 注册仓储服务
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+// 使用装饰器模式为仓储添加缓存功能(不使用Scrutor库时的配置方法)
+//builder.Services.AddScoped<IBasketRepository>(sp =>
+//{
+//    var repository = sp.GetRequiredService<BasketRepository>();
+//    var cache = sp.GetRequiredService<Microsoft.Extensions.Caching.Distributed.IDistributedCache>();
+//    return new CachedBasketRepository(repository, cache);
+//});
+// 使用Scrutor库为仓储添加缓存功能的装饰器模式
+builder.Services.Decorate<IBasketRepository, CachedBasketRepository>();
+// 注册Redis分布式缓存
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("Redis")!;
+});
 
 var app = builder.Build();
 // 配置HTTP请求管道。

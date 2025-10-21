@@ -16,8 +16,8 @@ internal class DeleteBasketCommandHandler(IBasketRepository repository) : IComma
 {
     public async Task<DeleteBasketResult> Handle(DeleteBasketCommand command, CancellationToken cancellationToken)
     {
+        // 将数据库和缓存操作交由仓储处理
         await repository.DeleteShoppingCartAsync(command.UserName, cancellationToken);
-        // TODO: 从缓存中删除用户的购物车
         return new DeleteBasketResult(true);
     }
 }

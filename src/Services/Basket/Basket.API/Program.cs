@@ -49,12 +49,26 @@ builder.Services.AddStackExchangeRedisCache(options =>
 {
     options.Configuration = redisConnectionString;
 });
+// 注册Grpc客户端服务
+builder.Services.AddGrpcClient<Discount.Grpc.DiscountProtoService.DiscountProtoServiceClient>(options =>
+{
+    options.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]!);
+}).ConfigurePrimaryHttpMessageHandler(() =>
+{
+    HttpClientHandler handler = new()
+    {
+        // 允许使用不受信任的SSL证书（仅用于开发环境）
+        ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+    };
+    return handler;
+});
 // 注册健康检查服务
 builder.Services.AddHealthChecks()
     .AddNpgSql(dbConnectionString)
     .AddRedis(redisConnectionString);
 
 var app = builder.Build();
+
 // 配置HTTP请求管道。
 // 映射Carter模块中的路由
 app.MapCarter();

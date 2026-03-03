@@ -37,4 +37,37 @@ public abstract class Entity<TKey> : Entity, IEntity<TKey>
     /// </summary>
     public virtual TKey Id { get; protected set; } = default!;
 
+    public override bool Equals(object? obj)
+    {
+        if (obj is not Entity<TKey> other)
+            return false;
+
+        if (ReferenceEquals(this, other))
+            return true;
+
+        if (GetType() != other.GetType())
+            return false;
+
+        if (Id!.Equals(default(TKey)) || other.Id!.Equals(default(TKey)))
+            return false;
+
+        return Id.Equals(other.Id);
+    }
+
+    public override int GetHashCode()
+    {
+        return Id!.GetHashCode();
+    }
+
+    public static bool operator ==(Entity<TKey>? left, Entity<TKey>? right)
+    {
+        if (left is null)
+            return right is null;
+        return left.Equals(right);
+    }
+
+    public static bool operator !=(Entity<TKey>? left, Entity<TKey>? right)
+    {
+        return !(left == right);
+    }
 }

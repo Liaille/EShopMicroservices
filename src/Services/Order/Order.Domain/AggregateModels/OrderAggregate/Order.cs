@@ -1,7 +1,4 @@
-﻿using Order.Domain.AggregateModels.ProductAggregate;
-using Order.Domain.Events;
-
-namespace Order.Domain.AggregateModels.OrderAggregate;
+﻿namespace Order.Domain.AggregateModels.OrderAggregate;
 
 public class Order : AggregateRoot<OrderId>
 {
@@ -136,7 +133,7 @@ public class Order : AggregateRoot<OrderId>
     /// <param name="productId">商品ID</param>
     /// <param name="quantity">数量</param>
     /// <param name="price">单价</param>
-    public void Add(ProductId productId, int quantity, decimal price)
+    public void AddOrderItem(ProductId productId, int quantity, decimal price)
     {
         ArgumentNullException.ThrowIfNull(productId, nameof(productId));
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(quantity);
@@ -156,21 +153,17 @@ public class Order : AggregateRoot<OrderId>
     /// 移除订单项
     /// </summary>
     /// <param name="productId">商品ID</param>
-    public void Remove(ProductId productId)
+    public void RemoveOrderItem(ProductId productId)
     {
         ArgumentNullException.ThrowIfNull(productId, nameof(productId));
 
         // 仅允许未取消/未支付的订单移除订单项
         if (Status is OrderStatus.Cancelled or OrderStatus.Paid or OrderStatus.Shipped)
-        {
             throw new DomainException("已取消/已支付/已发货的订单不允许移除订单项");
-        }
 
         var orderItem = _orderItems.FirstOrDefault(x => x.ProductId == productId);
         if (orderItem is not null)
-        {
             _orderItems.Remove(orderItem);
-        }
     }
 
     #region 订单状态流转方法（核心业务规则）

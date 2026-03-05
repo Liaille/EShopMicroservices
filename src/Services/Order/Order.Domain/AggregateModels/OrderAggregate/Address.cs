@@ -16,7 +16,7 @@ public record Address
     public string LastName { get; } = default!;
 
     /// <summary>
-    /// 邮件地址
+    /// 邮件
     /// </summary>
     public string? Email { get; }
 
@@ -39,4 +39,27 @@ public record Address
     /// 邮政编码
     /// </summary>
     public string ZipCode { get; } = default!;
+
+    protected Address() { }
+
+    private Address(string firstName, string lastName, string email, string addressLine, string country, string state, string zipCode)
+    {
+        FirstName = firstName;
+        LastName = lastName;
+        Email = email;
+        AddressLine = addressLine;
+        Country = country;
+        State = state;
+        ZipCode = zipCode;
+    }
+
+    public static Address Create(string firstName, string lastName, string email, string addressLine, string country, string state, string zipCode)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(firstName, nameof(firstName));
+        ArgumentException.ThrowIfNullOrEmpty(lastName, nameof(lastName));
+        EmailValidator.EnsureValidOptional(email);
+        ArgumentException.ThrowIfNullOrEmpty(addressLine, nameof(addressLine));
+
+        return new Address(firstName, lastName, email, addressLine, country, state, zipCode);
+    }
 }

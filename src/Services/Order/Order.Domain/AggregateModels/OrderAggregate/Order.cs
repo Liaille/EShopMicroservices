@@ -145,7 +145,7 @@ public class Order : AggregateRoot<OrderId>
             throw new DomainException("已取消/已支付/已发货的订单不允许添加订单项");
         }
 
-        var orderItem = new OrderItem(Id, productId, quantity, price);
+        var orderItem = new OrderItem(productId, quantity, price);
         _orderItems.Add(orderItem);
     }
 

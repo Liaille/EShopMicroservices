@@ -24,19 +24,19 @@ public static class AddressComplexPropertyBuilderExtension
         var addressBuilder = builder.ComplexProperty(nullableAddressProperty);
 
         // 通用配置逻辑
-        addressBuilder.Property(a => a.FirstName).IsRequired().HasMaxLength(50);
+        addressBuilder.Property(a => a.FirstName).HasMaxLength(50).IsRequired();
 
-        addressBuilder.Property(a => a.LastName).IsRequired().HasMaxLength(50);
+        addressBuilder.Property(a => a.LastName).HasMaxLength(50).IsRequired();
 
         addressBuilder.Property(a => a.Email).HasMaxLength(255);
 
-        addressBuilder.Property(a => a.AddressLine).IsRequired().HasMaxLength(180);
+        addressBuilder.Property(a => a.AddressLine).HasMaxLength(180).IsRequired();
 
         addressBuilder.Property(a => a.Country).HasMaxLength(50);
 
         addressBuilder.Property(a => a.State).HasMaxLength(50);
 
-        addressBuilder.Property(a => a.ZipCode).IsRequired().HasMaxLength(5);
+        addressBuilder.Property(a => a.ZipCode).HasMaxLength(5).IsRequired();
 
         customConfigure?.Invoke(addressBuilder);
     }

@@ -8,7 +8,6 @@ public record ProductId
 
     public static ProductId Create(Guid value)
     {
-        ArgumentNullException.ThrowIfNull(value, nameof(value));
         if (value == Guid.Empty) throw new DomainException("ProductId cannot be empty.");
         return new ProductId(value);
     }

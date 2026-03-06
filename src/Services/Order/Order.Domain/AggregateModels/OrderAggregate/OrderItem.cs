@@ -6,11 +6,6 @@
 public class OrderItem : Entity<OrderItemId> 
 {
     /// <summary>
-    /// 订单Id
-    /// </summary>
-    public OrderId OrderId { get; private set; } = default!;
-
-    /// <summary>
     /// 产品Id
     /// </summary>
     public ProductId ProductId { get; private set; } = default!;
@@ -25,10 +20,9 @@ public class OrderItem : Entity<OrderItemId>
     /// </summary>
     public decimal Price { get; private set; } = default!;
 
-    internal OrderItem(OrderId orderId, ProductId productId, int quantity, decimal price)
+    internal OrderItem(ProductId productId, int quantity, decimal price)
     {
         Id = OrderItemId.Create(Guid.NewGuid());
-        OrderId = orderId;
         ProductId = productId;
         Quantity = quantity;
         Price = price;

@@ -8,7 +8,6 @@ public record CustomerId
 
     public static CustomerId Create(Guid value)
     {
-        ArgumentNullException.ThrowIfNull(value, nameof(value));
         if (value == Guid.Empty) throw new DomainException("CustomerId cannot be empty.");
 
         return new CustomerId(value);

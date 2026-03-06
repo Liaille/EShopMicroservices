@@ -8,7 +8,6 @@ public record PaymentMethodId
 
     public static PaymentMethodId Create(Guid value)
     {
-        ArgumentNullException.ThrowIfNull(value, nameof(value));
         if (value == Guid.Empty) throw new DomainException("PaymentMethodId cannot be empty.");
         return new PaymentMethodId(value);
     }

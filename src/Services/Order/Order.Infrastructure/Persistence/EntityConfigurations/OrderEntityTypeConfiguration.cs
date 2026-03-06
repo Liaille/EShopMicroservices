@@ -21,11 +21,6 @@ internal class OrderEntityTypeConfiguration : IEntityTypeConfiguration<Domain.Ag
             .HasForeignKey(o => o.CustomerId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasMany(o => o.OrderItems)
-            .WithOne()
-            .HasForeignKey(i => i.OrderId)
-            .OnDelete(DeleteBehavior.Restrict);
-
         builder.HasOne<PaymentMethod>()
             .WithMany()
             .HasForeignKey(o => o.PaymentMethodId)
@@ -42,7 +37,5 @@ internal class OrderEntityTypeConfiguration : IEntityTypeConfiguration<Domain.Ag
         builder.ConfigureAddressComplexProperty(o => o.ShippingAddress);
 
         builder.ConfigureAddressComplexProperty(o => o.BillingAddress);
-
-
     }
 }

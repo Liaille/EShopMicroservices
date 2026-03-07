@@ -26,6 +26,9 @@ services:
       context: .
       dockerfile: Services/Discount/Discount.Grpc/Dockerfile
 
+  orderdb:
+    image: mcr.microsoft.com/mssql/server
+
 volumes:
   postgres_catalog:
   postgres_basket:

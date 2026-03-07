@@ -47,7 +47,11 @@ public class Order : AggregateRoot<OrderId>
     /// <summary>
     /// 订单总价
     /// </summary>
-    public decimal TotalPrice => OrderItems.Sum(x => x.Price * x.Quantity);
+    public decimal TotalPrice
+    {
+        get => OrderItems.Sum(x => x.Price * x.Quantity);
+        private set { }
+    }
 
     /// <summary>
     /// 私有化无参构造函数，强制通过Create方法创建

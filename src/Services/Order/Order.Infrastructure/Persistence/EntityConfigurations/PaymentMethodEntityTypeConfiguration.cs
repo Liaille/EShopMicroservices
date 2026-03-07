@@ -6,7 +6,6 @@ internal class PaymentMethodEntityTypeConfiguration : IEntityTypeConfiguration<P
     {
         // 省略HasKey配置，EF Core会根据约定将Id属性作为主键
         builder.Property(p => p.Id)
-            .UseHiLo()
             .HasConversion(paymentMethodId => paymentMethodId.Value, dbId => PaymentMethodId.Create(dbId));
         // 隐式配置CustomerId属性为外键
         builder.Property<Guid>("CustomerId").IsRequired();

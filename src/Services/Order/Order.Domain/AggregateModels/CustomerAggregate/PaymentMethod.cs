@@ -3,7 +3,7 @@
 public class PaymentMethod : Entity<PaymentMethodId>
 {
     /// <summary>
-    /// 银行卡类型Id，如1=Visa、2=MasterCard、3=银联等
+    /// 支付渠道类型Id
     /// </summary>
     public int CardTypeId { get; private set; }
 

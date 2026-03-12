@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Order.Infrastructure.Persistence.DbContexts;
+using Order.Infrastructure.Persistence.Seeds;
 
 namespace Order.Infrastructure;
 
@@ -16,7 +15,9 @@ public static class DependencyInjection
         // 自动化数据库迁移+种子数据
         if (isDevelopment)
         {
-
+            services.AddSeedData<OrderDbContext>();
+            services.AddScoped<OrderContextSeedManager>();
+            services.AddMigration<OrderDbContext, OrderContextSeed>();
         }
         else
         {

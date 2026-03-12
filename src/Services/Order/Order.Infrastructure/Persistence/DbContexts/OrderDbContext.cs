@@ -3,10 +3,13 @@
 public class OrderDbContext(DbContextOptions<OrderDbContext> options) : DbContext(options)
 {
     public DbSet<Customer> Customers => Set<Customer>();
+
     public DbSet<PaymentMethod> PaymentMethods => Set<PaymentMethod>();
+
     public DbSet<CardType> CardTypes => Set<CardType>();
 
     public DbSet<Domain.AggregateModels.OrderAggregate.Order> Orders => Set<Domain.AggregateModels.OrderAggregate.Order>();
+    
     public DbSet<OrderItem> OrderItems => Set<OrderItem>();
 
     public DbSet<Product> Products => Set<Product>();

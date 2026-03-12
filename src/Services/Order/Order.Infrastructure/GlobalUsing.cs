@@ -1,6 +1,11 @@
-﻿global using Microsoft.EntityFrameworkCore;
+﻿global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Logging;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 global using Order.Domain.AggregateModels.CustomerAggregate;
 global using Order.Domain.AggregateModels.OrderAggregate;
 global using Order.Domain.AggregateModels.ProductAggregate;
-global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+global using Order.Domain.Shared.Constants;
 global using Order.Infrastructure.Persistence.Extensions;
+global using Order.Infrastructure.Persistence.DbContexts;
+global using Order.Infrastructure.Persistence.Seeds.Abstractions;

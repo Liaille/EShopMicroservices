@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Hosting;
 using System.Diagnostics;
 
 namespace Order.Infrastructure.Persistence.Extensions;
@@ -184,5 +182,5 @@ public interface IDbSeeder<in TContext> where TContext : DbContext
     /// <returns>表示种子数据插入操作的 <see cref="Task"/>，操作完成则任务完成，插入失败则任务抛出异常。</returns>
     /// <exception cref="ArgumentNullException">当 <paramref name="context"/> 为 null 时抛出。</exception>
     /// <exception cref="Microsoft.EntityFrameworkCore.DbUpdateException">插入数据时违反数据库约束（如主键重复、外键关联失败）时抛出。</exception>
-    Task SeedAsync(TContext context);
+    Task SeedAsync(TContext context, CancellationToken cancellationToken = default);
 }

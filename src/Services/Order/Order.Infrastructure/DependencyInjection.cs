@@ -9,6 +9,7 @@ public static class DependencyInjection
     {
         var connectionString = configuration.GetConnectionString("Database");
 
+        // Add-Migration InitialOrderDb -OutputDir Persistence/Migrations -Project Order.Infrastructure -StartupProject Order.API
         services.AddDbContext<OrderDbContext>(options =>
             options.UseSqlServer(connectionString));
 

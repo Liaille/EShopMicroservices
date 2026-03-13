@@ -17,7 +17,7 @@ internal class PaymentMethodSeedData : ISeedData<OrderDbContext>
             var cardType = await context.CardTypes.FirstOrDefaultAsync(ct => ct.Id == cardTypeId, cancellationToken) ?? throw new InvalidOperationException($"CardTypeId: {cardTypeId} does not exist.");
             
             // 客户数据校验，确保目标客户存在
-            var targetCustomerId = CustomerId.Create(Guid.Parse("b535e7e6-aa26-432a-b260-bf0e287843d3"));
+            var targetCustomerId = CustomerId.Create(new Guid("b535e7e6-aa26-432a-b260-bf0e287843d3"));
             var customerTom = await context.Customers
                 .Include(c => c.PaymentMethods)
                 .FirstOrDefaultAsync(c => c.Id == targetCustomerId, cancellationToken)

@@ -6,6 +6,11 @@
 public class OrderItem : Entity<OrderItemId> 
 {
     /// <summary>
+    /// 订单ID
+    /// </summary>
+    public OrderId OrderId { get; private set; } = default!;
+
+    /// <summary>
     /// 产品Id
     /// </summary>
     public ProductId ProductId { get; private set; } = default!;

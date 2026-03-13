@@ -1,4 +1,6 @@
-﻿namespace Order.Infrastructure.Persistence.EntityConfigurations;
+﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+
+namespace Order.Infrastructure.Persistence.EntityConfigurations;
 
 internal class OrderEntityTypeConfiguration : IEntityTypeConfiguration<Domain.AggregateModels.OrderAggregate.Order>
 {
@@ -12,24 +14,34 @@ internal class OrderEntityTypeConfiguration : IEntityTypeConfiguration<Domain.Ag
 
         builder.Property(o => o.Status)
             .HasDefaultValue(OrderStatus.Submitted)
-            .HasConversion(s => s.ToString(), dbStatus => Enum.Parse<OrderStatus>(dbStatus));
+            .HasConversion(new EnumToStringConverter<OrderStatus>())
+            .HasMaxLength(50)
+            .IsRequired();
 
-        builder.Property(o => o.TotalPrice);
+        // TotalPrice是计算属性并且private set导致EF Core无法赋值，因此显式忽略该属性的映射
+        builder.Ignore(o => o.TotalPrice);
 
         builder.HasOne<Customer>()
             .WithMany()
             .HasForeignKey(o => o.CustomerId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Restrict)
+            .IsRequired();
 
         builder.HasOne<PaymentMethod>()
             .WithMany()
             .HasForeignKey(o => o.PaymentMethodId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Restrict)
+            .IsRequired();
+
+        builder.HasMany(o => o.OrderItems)
+            .WithOne()
+            .HasForeignKey(oi => oi.OrderId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.ComplexProperty(o => o.OrderName, nameBuilder =>
         {
             nameBuilder.Property(n => n.Value)
-                .HasColumnName(nameof(Domain.AggregateModels.OrderAggregate.Order.OrderName))
+                .HasColumnName("OrderName")
                 .HasMaxLength(100)
                 .IsRequired();
         });

@@ -8,31 +8,38 @@ internal class OrderItemSeedData : ISeedData<OrderDbContext>
 
     public async Task ExecuteAsync(OrderDbContext context, CancellationToken cancellationToken = default)
     {
-        // 无导航属性时，直接通过EF Core的外键约定查询
-        var orderId = OrderId.Create(Guid.Parse("5334c996-8457-4cf0-815c-ed2b77c4ff61"));
-        if (await context.Orders.AnyAsync(oi => EF.Property<Guid>(oi, "OrderId") == orderId.Value, cancellationToken)) return;
-
         try
         {
-            // 查询已有订单
+            // 创建值对象实例
+            var targetOrderId = OrderId.Create(new Guid("5334c996-8457-4cf0-815c-ed2b77c4ff61"));
+            var targetProductId = ProductId.Create(new Guid("81de7a19-6f4a-490f-802c-c5618ebdd4f9"));
+
+            // 查询订单项是否存在
+            if (await context.OrderItems
+                .AnyAsync(oi => oi.OrderId == targetOrderId
+                              && oi.ProductId == targetProductId, cancellationToken))
+                return;
+
+            // 查询订单
             var order = await context.Orders
                 .Include(o => o.OrderItems)
-                .FirstAsync(o => o.Id == orderId, cancellationToken);
+                .FirstAsync(o => o.Id == targetOrderId, cancellationToken);
 
-            // 查询商品数据
-            var productId = ProductId.Create(Guid.Parse("81de7a19-6f4a-490f-802c-c5618ebdd4f9"));
-            var product = await context.Products.FirstAsync(p => p.Id == productId, cancellationToken);
+            // 查询商品
+            var product = await context.Products
+                .FirstOrDefaultAsync(p => p.Id == targetProductId, cancellationToken)
+                ?? throw new InvalidOperationException($"ProductId: {targetProductId.Value} does not exist.");
 
-            // 为订单添加订单项
-            order.AddOrderItem(product.Id, 1, product.Price);
+            // 检查订单项重复
+            if (!order.OrderItems.Any(oi => oi.ProductId == targetProductId))
+                order.AddOrderItem(product.Id, 1, product.Price);
 
             // 保存更改
             await context.SaveChangesAsync(cancellationToken);
         }
         catch (Exception ex)
         {
-            throw new InvalidOperationException($"Order item seed data addition failed.", ex);
+            throw new InvalidOperationException($"Order item seed data addition failed: {ex.Message}", ex);
         }
-
     }
 }

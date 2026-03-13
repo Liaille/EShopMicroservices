@@ -100,9 +100,6 @@ namespace Order.Infrastructure.Persistence.Migrations
                     b.Property<Guid>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("CustomerId1")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime>("Expiration")
                         .HasColumnType("datetime2");
 
@@ -115,8 +112,6 @@ namespace Order.Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CardTypeId");
-
-                    b.HasIndex("CustomerId1");
 
                     b.HasIndex(new[] { "CustomerId", "CardNumber", "CardTypeId" }, "Expiration")
                         .IsUnique()
@@ -154,11 +149,9 @@ namespace Order.Infrastructure.Persistence.Migrations
                     b.Property<string>("Status")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
                         .HasDefaultValue("Submitted");
-
-                    b.Property<decimal>("TotalPrice")
-                        .HasColumnType("decimal(18,2)");
 
                     b.ComplexProperty(typeof(Dictionary<string, object>), "BillingAddress", "Order.Domain.AggregateModels.OrderAggregate.Order.BillingAddress#Address", b1 =>
                         {
@@ -195,8 +188,8 @@ namespace Order.Infrastructure.Persistence.Migrations
 
                             b1.Property<string>("ZipCode")
                                 .IsRequired()
-                                .HasMaxLength(5)
-                                .HasColumnType("nvarchar(5)");
+                                .HasMaxLength(10)
+                                .HasColumnType("nvarchar(10)");
                         });
 
                     b.ComplexProperty(typeof(Dictionary<string, object>), "OrderName", "Order.Domain.AggregateModels.OrderAggregate.Order.OrderName#OrderName", b1 =>
@@ -245,8 +238,8 @@ namespace Order.Infrastructure.Persistence.Migrations
 
                             b1.Property<string>("ZipCode")
                                 .IsRequired()
-                                .HasMaxLength(5)
-                                .HasColumnType("nvarchar(5)");
+                                .HasMaxLength(10)
+                                .HasColumnType("nvarchar(10)");
                         });
 
                     b.HasKey("Id");
@@ -275,7 +268,7 @@ namespace Order.Infrastructure.Persistence.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("OrderId")
+                    b.Property<Guid>("OrderId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Price")
@@ -336,7 +329,9 @@ namespace Order.Infrastructure.Persistence.Migrations
 
                     b.HasOne("Order.Domain.AggregateModels.CustomerAggregate.Customer", null)
                         .WithMany("PaymentMethods")
-                        .HasForeignKey("CustomerId1");
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("CardType");
                 });
@@ -360,7 +355,9 @@ namespace Order.Infrastructure.Persistence.Migrations
                 {
                     b.HasOne("Order.Domain.AggregateModels.OrderAggregate.Order", null)
                         .WithMany("OrderItems")
-                        .HasForeignKey("OrderId");
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Order.Domain.AggregateModels.ProductAggregate.Product", null)
                         .WithMany()

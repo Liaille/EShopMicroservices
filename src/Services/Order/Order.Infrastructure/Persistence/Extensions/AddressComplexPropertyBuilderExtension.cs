@@ -36,7 +36,7 @@ public static class AddressComplexPropertyBuilderExtension
 
         addressBuilder.Property(a => a.State).HasMaxLength(50);
 
-        addressBuilder.Property(a => a.ZipCode).HasMaxLength(5).IsRequired();
+        addressBuilder.Property(a => a.ZipCode).HasMaxLength(10).IsRequired();
 
         customConfigure?.Invoke(addressBuilder);
     }

@@ -20,3 +20,13 @@ public interface IDomainEvent
     /// </summary>
     public string EventType { get; }
 }
+
+/// <summary>
+/// 本地事件标记接口(仅当前进程内处理)
+/// </summary>
+public interface ILocalDomainEvent : IDomainEvent { }
+
+/// <summary>
+/// 分布式事件标记接口(需跨服务传播)
+/// </summary>
+public interface IDistributedDomainEvent : IDomainEvent { }

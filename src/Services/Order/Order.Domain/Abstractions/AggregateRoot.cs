@@ -37,19 +37,19 @@ public abstract class AggregateRoot<TKey> : Entity<TKey>, IAggregateRoot<TKey>
     /// 获取带顺序的本地事件记录集合
     /// </summary>
     /// <returns></returns>
-    internal IReadOnlyList<DomainEventRecord> GetLocalEventRecords() => _localEvents.AsReadOnly();
+    public IReadOnlyList<DomainEventRecord> GetLocalEventRecords() => _localEvents.AsReadOnly();
 
     /// <summary>
     /// 获取带顺序的分布式事件记录集合
     /// </summary>
     /// <returns></returns>
-    internal IReadOnlyList<DomainEventRecord> GetDistributedEventRecords() => _distributedEvents.AsReadOnly();
+    public IReadOnlyList<DomainEventRecord> GetDistributedEventRecords() => _distributedEvents.AsReadOnly();
 
     /// <summary>
     /// 添加一个本地事件
     /// </summary>
     /// <param name="domainEvent"></param>
-    protected virtual void AddLocalEvent(IDomainEvent domainEvent)
+    protected virtual void AddLocalEvent(ILocalDomainEvent domainEvent)
     {
         ArgumentNullException.ThrowIfNull(domainEvent, nameof(domainEvent));
         _localEvents.Add(new DomainEventRecord(domainEvent, Interlocked.Increment(ref _localEventOrderCounter)));
@@ -59,7 +59,7 @@ public abstract class AggregateRoot<TKey> : Entity<TKey>, IAggregateRoot<TKey>
     /// 添加一个分布式事件
     /// </summary>
     /// <param name="domainEvent"></param>
-    protected virtual void AddDistributedEvent(IDomainEvent domainEvent)
+    protected virtual void AddDistributedEvent(IDistributedDomainEvent domainEvent)
     {
         ArgumentNullException.ThrowIfNull(domainEvent, nameof(domainEvent));
         _distributedEvents.Add(new DomainEventRecord(domainEvent, Interlocked.Increment(ref _distributedEventOrderCounter)));

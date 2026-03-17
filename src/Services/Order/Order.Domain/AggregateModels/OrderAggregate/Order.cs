@@ -96,7 +96,7 @@ public class Order : AggregateRoot<OrderId>
         };
 
         // 发布订单创建领域事件
-        order.AddDistributedEvent(new OrderCreatedEvent(order));
+        order.AddDistributedEvent(new OrderCreatedDistributedEvent(order));
         return order;
     }
 
@@ -128,7 +128,7 @@ public class Order : AggregateRoot<OrderId>
         BillingAddress = billingAddress;
         PaymentMethodId = paymentMethodId;
 
-        AddDistributedEvent(new OrderUpdatedEvent(this));
+        AddLocalEvent(new OrderUpdatedLocalEvent(this));
     }
 
     /// <summary>
@@ -183,7 +183,7 @@ public class Order : AggregateRoot<OrderId>
         }
 
         Status = OrderStatus.AwaitingValidation;
-        AddDistributedEvent(new OrderStatusChangedEvent(this, Status));
+        AddLocalEvent(new OrderStatusChangedLocalEvent(this, Status));
     }
 
     /// <summary>
@@ -198,7 +198,7 @@ public class Order : AggregateRoot<OrderId>
         }
 
         Status = OrderStatus.StockConfirmed;
-        AddDistributedEvent(new OrderStatusChangedEvent(this, Status));
+        AddLocalEvent(new OrderStatusChangedLocalEvent(this, Status));
     }
 
     /// <summary>
@@ -214,8 +214,8 @@ public class Order : AggregateRoot<OrderId>
         }
 
         Status = OrderStatus.Paid;
-        AddDistributedEvent(new OrderPaidEvent(this, paymentRecordId));
-        AddDistributedEvent(new OrderStatusChangedEvent(this, Status));
+        AddDistributedEvent(new OrderPaidDistributedEvent(this, paymentRecordId));
+        AddLocalEvent(new OrderStatusChangedLocalEvent(this, Status));
     }
 
     /// <summary>
@@ -230,8 +230,8 @@ public class Order : AggregateRoot<OrderId>
         }
 
         Status = OrderStatus.Shipped;
-        AddDistributedEvent(new OrderShippedEvent(this));
-        AddDistributedEvent(new OrderStatusChangedEvent(this, Status));
+        AddDistributedEvent(new OrderShippedDistributedEvent(this));
+        AddLocalEvent(new OrderStatusChangedLocalEvent(this, Status));
     }
 
     /// <summary>
@@ -246,8 +246,8 @@ public class Order : AggregateRoot<OrderId>
         }
 
         Status = OrderStatus.Cancelled;
-        AddDistributedEvent(new OrderCancelledEvent(this));
-        AddDistributedEvent(new OrderStatusChangedEvent(this, Status));
+        AddDistributedEvent(new OrderCancelledDistributedEvent(this));
+        AddLocalEvent(new OrderStatusChangedLocalEvent(this, Status));
     }
     #endregion
 }

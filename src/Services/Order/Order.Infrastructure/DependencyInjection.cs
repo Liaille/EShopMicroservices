@@ -13,7 +13,8 @@ public static class DependencyInjection
 
         // 注册审计拦截器
         services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
-        
+        services.AddScoped<ISaveChangesInterceptor, DomainEventsDispatchInterceptor>();
+
         // Add-Migration InitialOrderDb -OutputDir Persistence/Migrations -Project Order.Infrastructure -StartupProject Order.API
         services.AddDbContext<OrderDbContext>((sp, options) =>
         {

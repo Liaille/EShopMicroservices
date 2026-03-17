@@ -2,6 +2,7 @@
 global using Microsoft.Extensions.Logging;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+global using Order.Domain.Abstractions;
 global using Order.Domain.AggregateModels.CustomerAggregate;
 global using Order.Domain.AggregateModels.OrderAggregate;
 global using Order.Domain.AggregateModels.ProductAggregate;

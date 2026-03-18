@@ -11,4 +11,17 @@
     <ProjectReference Include="..\Order.Domain\Order.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Commands\Order\Validators\" />
+    <Folder Include="Events\ApplicationEvents\Handlers\" />
+    <Folder Include="Events\IntegrationEvents\Handlers\" />
+    <Folder Include="Interfaces\Repositories\" />
+    <Folder Include="Interfaces\Services\" />
+    <Folder Include="Exceptions\" />
+    <Folder Include="Queries\Order\Dtos\" />
+    <Folder Include="Services\" />
+    <Folder Include="Behaviors\" />
+    <Folder Include="Extensions\" />
+  </ItemGroup>
+
 </Project>

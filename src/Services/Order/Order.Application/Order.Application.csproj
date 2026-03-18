@@ -18,7 +18,7 @@
     <Folder Include="Interfaces\Repositories\" />
     <Folder Include="Interfaces\Services\" />
     <Folder Include="Exceptions\" />
-    <Folder Include="Queries\Order\Dtos\" />
+    <Folder Include="Queries\Order\" />
     <Folder Include="Services\" />
     <Folder Include="Behaviors\" />
     <Folder Include="Extensions\" />

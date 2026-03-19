@@ -1,6 +1,6 @@
 ﻿using Order.Domain.AggregateModels.OrderAggregate;
 
-namespace Order.Application.Dtos.Order;
+namespace Order.Application.Dtos.OrderAggregate;
 
 /// <summary>
 /// 订单DTO
@@ -24,4 +24,4 @@ public record OrderDto(
     AddressDto BillingAddress,
     Guid PaymentMethodId,
     OrderStatus Status,
-    List<OrderItemDto> OrderItems);
+    IReadOnlyList<OrderItemDto> OrderItems);

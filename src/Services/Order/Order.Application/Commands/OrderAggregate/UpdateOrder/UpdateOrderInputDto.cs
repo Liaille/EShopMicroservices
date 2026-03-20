@@ -1,18 +1,18 @@
-﻿namespace Order.Application.Commands.OrderAggregate.CreateOrder;
+﻿namespace Order.Application.Commands.OrderAggregate.UpdateOrder;
 
 /// <summary>
-/// 创建订单输入DTO
+/// 更新订单基础信息输入DTO
 /// </summary>
+/// <param name="OrderId"></param>
 /// <param name="CustomerId"></param>
 /// <param name="OrderName"></param>
 /// <param name="ShippingAddress"></param>
 /// <param name="BillingAddress"></param>
 /// <param name="PaymentMethodId"></param>
-/// <param name="OrderItems"></param>
-public record CreateOrderInputDto(
+public record UpdateOrderInputDto(
+    Guid OrderId,
     Guid CustomerId,
     string OrderName,
     AddressDto ShippingAddress,
     AddressDto BillingAddress,
-    Guid PaymentMethodId,
-    IReadOnlyList<OrderItemDto> OrderItems);
+    Guid PaymentMethodId);

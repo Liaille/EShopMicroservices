@@ -1,6 +1,8 @@
-﻿namespace Order.Infrastructure.Persistence.DbContexts;
+﻿using Order.Application.Interfaces.Repositories;
 
-public class OrderDbContext(DbContextOptions<OrderDbContext> options) : DbContext(options)
+namespace Order.Infrastructure.Persistence.DbContexts;
+
+public class OrderDbContext(DbContextOptions<OrderDbContext> options) : DbContext(options), IOrderDbContext
 {
     public DbSet<Customer> Customers => Set<Customer>();
 

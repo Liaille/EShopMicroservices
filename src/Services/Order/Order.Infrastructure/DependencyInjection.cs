@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
+using Order.Application.Interfaces.Repositories;
 using Order.Infrastructure.Persistence.Interceptors;
 using Order.Infrastructure.Persistence.Seeds;
 
@@ -21,6 +22,8 @@ public static class DependencyInjection
             options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
             options.UseSqlServer(connectionString);
         });
+
+        services.AddScoped<IOrderDbContext, OrderDbContext>();
 
         // 自动化数据库迁移+种子数据
         if (isDevelopment)

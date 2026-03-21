@@ -9,13 +9,13 @@
 /// <item>消息服务：发送支付成功通知</item>
 /// </list>
 /// </summary>
-public sealed class OrderPaidDistributedEvent : DomainEvent, IDistributedDomainEvent
+public sealed class OrderPaidDomainEvent : DomainEvent
 {
     public AggregateModels.OrderAggregate.Order Order { get; }
 
     public string? PaymentRecordId { get; }
 
-    public OrderPaidDistributedEvent(AggregateModels.OrderAggregate.Order order, string? paymentRecordId) : base()
+    public OrderPaidDomainEvent(AggregateModels.OrderAggregate.Order order, string? paymentRecordId) : base()
     {
         Order = order ?? throw new ArgumentNullException(nameof(order));
         PaymentRecordId = paymentRecordId;

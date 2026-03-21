@@ -9,16 +9,16 @@
 /// <item>消息服务：发送下单成功通知</item>
 /// </list>
 /// </summary>
-public sealed class OrderCreatedDistributedEvent : DomainEvent, IDistributedDomainEvent
+public sealed class OrderCreatedDomainEvent : DomainEvent
 {
     public AggregateModels.OrderAggregate.Order Order { get; }
 
-    public OrderCreatedDistributedEvent(AggregateModels.OrderAggregate.Order order) : base()
+    public OrderCreatedDomainEvent(AggregateModels.OrderAggregate.Order order) : base()
     {
         Order = order ?? throw new ArgumentNullException(nameof(order));
     }
 
-    public OrderCreatedDistributedEvent(Guid eventId, DateTime occurredOn, AggregateModels.OrderAggregate.Order order) : base(eventId, occurredOn)
+    public OrderCreatedDomainEvent(Guid eventId, DateTime occurredOn, AggregateModels.OrderAggregate.Order order) : base(eventId, occurredOn)
     {
         Order = order ?? throw new ArgumentNullException(nameof(order));
         if (occurredOn.Kind != DateTimeKind.Utc) throw new ArgumentException("The occurrence time of the event must be in UTC.", nameof(occurredOn));

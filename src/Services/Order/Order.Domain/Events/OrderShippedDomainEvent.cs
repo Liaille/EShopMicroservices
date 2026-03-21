@@ -9,11 +9,11 @@
 /// <item>售后服务：初始化售后权限</item>
 /// </list>
 /// </summary>
-public sealed class OrderShippedDistributedEvent : DomainEvent, IDistributedDomainEvent
+public sealed class OrderShippedDomainEvent : DomainEvent
 {
     public AggregateModels.OrderAggregate.Order Order { get; }
 
-    public OrderShippedDistributedEvent(AggregateModels.OrderAggregate.Order order) : base()
+    public OrderShippedDomainEvent(AggregateModels.OrderAggregate.Order order) : base()
     {
         Order = order ?? throw new ArgumentNullException(nameof(order));
     }

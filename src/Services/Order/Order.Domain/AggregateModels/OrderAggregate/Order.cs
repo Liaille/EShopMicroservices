@@ -96,7 +96,7 @@ public class Order : AggregateRoot<OrderId>
         };
 
         // 发布订单创建领域事件
-        order.AddDistributedEvent(new OrderCreatedDistributedEvent(order));
+        order.AddDomainEvent(new OrderCreatedDomainEvent(order));
         return order;
     }
 
@@ -128,7 +128,7 @@ public class Order : AggregateRoot<OrderId>
         BillingAddress = billingAddress;
         PaymentMethodId = paymentMethodId;
 
-        AddLocalEvent(new OrderUpdatedLocalEvent(this));
+        AddDomainEvent(new OrderUpdatedDomainEvent(this));
     }
 
     /// <summary>
@@ -183,7 +183,7 @@ public class Order : AggregateRoot<OrderId>
         }
 
         Status = OrderStatus.AwaitingValidation;
-        AddLocalEvent(new OrderStatusChangedLocalEvent(this, Status));
+        AddDomainEvent(new OrderStatusChangedDomainEvent(this, Status));
     }
 
     /// <summary>
@@ -198,7 +198,7 @@ public class Order : AggregateRoot<OrderId>
         }
 
         Status = OrderStatus.StockConfirmed;
-        AddLocalEvent(new OrderStatusChangedLocalEvent(this, Status));
+        AddDomainEvent(new OrderStatusChangedDomainEvent(this, Status));
     }
 
     /// <summary>
@@ -214,8 +214,8 @@ public class Order : AggregateRoot<OrderId>
         }
 
         Status = OrderStatus.Paid;
-        AddDistributedEvent(new OrderPaidDistributedEvent(this, paymentRecordId));
-        AddLocalEvent(new OrderStatusChangedLocalEvent(this, Status));
+        AddDomainEvent(new OrderPaidDomainEvent(this, paymentRecordId));
+        AddDomainEvent(new OrderStatusChangedDomainEvent(this, Status));
     }
 
     /// <summary>
@@ -230,8 +230,8 @@ public class Order : AggregateRoot<OrderId>
         }
 
         Status = OrderStatus.Shipped;
-        AddDistributedEvent(new OrderShippedDistributedEvent(this));
-        AddLocalEvent(new OrderStatusChangedLocalEvent(this, Status));
+        AddDomainEvent(new OrderShippedDomainEvent(this));
+        AddDomainEvent(new OrderStatusChangedDomainEvent(this, Status));
     }
 
     /// <summary>
@@ -246,8 +246,8 @@ public class Order : AggregateRoot<OrderId>
         }
 
         Status = OrderStatus.Cancelled;
-        AddDistributedEvent(new OrderCancelledDistributedEvent(this));
-        AddLocalEvent(new OrderStatusChangedLocalEvent(this, Status));
+        AddDomainEvent(new OrderCancelledDomainEvent(this));
+        AddDomainEvent(new OrderStatusChangedDomainEvent(this, Status));
     }
     #endregion
 }

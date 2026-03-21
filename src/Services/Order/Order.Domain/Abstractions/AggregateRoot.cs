@@ -7,71 +7,39 @@
 public abstract class AggregateRoot<TKey> : Entity<TKey>, IAggregateRoot<TKey>
 {
     /// <summary>
-    /// 本地事件列表
+    /// 领域事件记录列表 (包含顺序)
     /// </summary>
-    private readonly List<DomainEventRecord> _localEvents = [];
-    /// <summary>
-    /// 分布式事件列表
-    /// </summary>
-    private readonly List<DomainEventRecord> _distributedEvents = [];
-    /// <summary>
-    /// 本地事件计数器
-    /// </summary>
-    private long _localEventOrderCounter;
-    /// <summary>
-    /// 分布式事件计数器
-    /// </summary>
-    private long _distributedEventOrderCounter;
+    private readonly List<DomainEventRecord> _domainEvents = [];
 
     /// <summary>
-    /// 本地事件只读列表(仅当前进程内处理，无跨服务传播)
+    /// 事件顺序计数器 (保证事件处理的先后顺序)
     /// </summary>
-    public IReadOnlyList<IDomainEvent> LocalEvents => _localEvents.Select(record => record.EventData).ToList().AsReadOnly();
+    private long _eventOrderCounter;
 
     /// <summary>
-    /// 分布式事件只读列表(需跨服务/进程传播)
+    /// 领域事件只读列表
     /// </summary>
-    public IReadOnlyList<IDomainEvent> DistributedEvents => _distributedEvents.Select(record => record.EventData).ToList().AsReadOnly();
+    public IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents.Select(record => record.EventData).ToList().AsReadOnly();
 
     /// <summary>
-    /// 获取带顺序的本地事件记录集合
+    /// 获取带执行顺序的事件记录只读列表 (供基础设施层分发时排序)
     /// </summary>
     /// <returns></returns>
-    public IReadOnlyList<DomainEventRecord> GetLocalEventRecords() => _localEvents.AsReadOnly();
-
-    /// <summary>
-    /// 获取带顺序的分布式事件记录集合
-    /// </summary>
-    /// <returns></returns>
-    public IReadOnlyList<DomainEventRecord> GetDistributedEventRecords() => _distributedEvents.AsReadOnly();
+    public IReadOnlyList<DomainEventRecord> GetDomainEventRecords() => _domainEvents.AsReadOnly();
 
     /// <summary>
     /// 添加一个本地事件
     /// </summary>
     /// <param name="domainEvent"></param>
-    protected virtual void AddLocalEvent(ILocalDomainEvent domainEvent)
+    protected virtual void AddDomainEvent(IDomainEvent domainEvent)
     {
         ArgumentNullException.ThrowIfNull(domainEvent, nameof(domainEvent));
-        _localEvents.Add(new DomainEventRecord(domainEvent, Interlocked.Increment(ref _localEventOrderCounter)));
-    }
-
-    /// <summary>
-    /// 添加一个分布式事件
-    /// </summary>
-    /// <param name="domainEvent"></param>
-    protected virtual void AddDistributedEvent(IDistributedDomainEvent domainEvent)
-    {
-        ArgumentNullException.ThrowIfNull(domainEvent, nameof(domainEvent));
-        _distributedEvents.Add(new DomainEventRecord(domainEvent, Interlocked.Increment(ref _distributedEventOrderCounter)));
+        _domainEvents.Add(new DomainEventRecord(domainEvent, Interlocked.Increment(ref _eventOrderCounter)));
     }
 
     /// <summary>
     /// 清空本地事件列表
     /// </summary>
-    public virtual void ClearLocalEvents() => _localEvents.Clear();
+    public virtual void ClearDomainEvents() => _domainEvents.Clear();
 
-    /// <summary>
-    /// 清空分布式事件列表
-    /// </summary>
-    public virtual void ClearDistributedEvents() => _distributedEvents.Clear();
 }

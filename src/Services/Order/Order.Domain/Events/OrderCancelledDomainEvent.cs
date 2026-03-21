@@ -9,11 +9,11 @@
 /// <item>消息服务：发送取消通知</item>
 /// </list>
 /// </summary>
-public sealed class OrderCancelledDistributedEvent : DomainEvent, IDistributedDomainEvent
+public sealed class OrderCancelledDomainEvent : DomainEvent
 {
     public AggregateModels.OrderAggregate.Order Order { get; }
 
-    public OrderCancelledDistributedEvent(AggregateModels.OrderAggregate.Order order) : base()
+    public OrderCancelledDomainEvent(AggregateModels.OrderAggregate.Order order) : base()
     {
         Order = order ?? throw new ArgumentNullException(nameof(order));
     }

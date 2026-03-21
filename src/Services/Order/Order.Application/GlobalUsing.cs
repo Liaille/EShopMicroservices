@@ -1,6 +1,9 @@
 ﻿global using BuildingBlocks.CQRS;
+global using MediatR;
 global using Order.Domain.AggregateModels.CustomerAggregate;
 global using Order.Domain.AggregateModels.OrderAggregate;
 global using Order.Domain.AggregateModels.ProductAggregate;
+global using Order.Domain.Events;
 global using Order.Application.Dtos.OrderAggregate;
 global using Order.Application.Exceptions;
+global using Microsoft.Extensions.Logging;

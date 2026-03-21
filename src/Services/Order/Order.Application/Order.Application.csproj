@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <Folder Include="Events\ApplicationEvents\Handlers\" />
-    <Folder Include="Events\IntegrationEvents\Handlers\" />
     <Folder Include="Interfaces\Services\" />
     <Folder Include="Queries\OrderAggregate\" />
     <Folder Include="Services\" />

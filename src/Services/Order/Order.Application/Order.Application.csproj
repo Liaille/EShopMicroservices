@@ -14,10 +14,8 @@
   <ItemGroup>
     <Folder Include="Events\ApplicationEvents\Handlers\" />
     <Folder Include="Interfaces\Services\" />
-    <Folder Include="Queries\OrderAggregate\" />
     <Folder Include="Services\" />
     <Folder Include="Behaviors\" />
-    <Folder Include="Extensions\" />
   </ItemGroup>
 
   <ItemGroup>

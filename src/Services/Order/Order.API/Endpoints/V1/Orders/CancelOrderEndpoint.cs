@@ -6,11 +6,15 @@ public class CancelOrderEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapDelete("/api/v1/orders/cancel", async (
-            CancelOrderRequest request, 
+        app.MapPost("/api/v1/orders/{orderId:guid}/cancel", async (
+            Guid orderId,
+            [FromBody] CancelOrderRequest request, 
             ISender sender,
             CancellationToken cancellationToken) =>
         {
+            if (orderId != request.OrderId)
+                return Results.BadRequest("Order ID does not match.");
+
             var command = request.Adapt<CancelOrderCommand>();
 
             var result = await sender.Send(command, cancellationToken);

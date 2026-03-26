@@ -8,7 +8,7 @@ public class GetOrdersByOrderNameHandler(IOrderDbContext dbContext) : IQueryHand
             .Include(o => o.OrderItems)
             .AsNoTracking()
             .Where(o => o.OrderName.Value.Contains(query.OrderName))
-            .OrderBy(o => o.OrderName)
+            .OrderBy(o => o.OrderName.Value)
             .Select(o => o.ToOrderDto())
             .ToListAsync(cancellationToken);
 

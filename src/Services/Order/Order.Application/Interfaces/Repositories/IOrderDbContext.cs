@@ -1,9 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Order.Domain.AggregateModels.CustomerAggregate;
-using Order.Domain.AggregateModels.OrderAggregate;
-using Order.Domain.AggregateModels.ProductAggregate;
-
-namespace Order.Application.Interfaces.Repositories;
+﻿namespace Order.Application.Interfaces.Repositories;
 
 public interface IOrderDbContext
 {

@@ -1,5 +1,7 @@
 ﻿global using BuildingBlocks.CQRS;
 global using BuildingBlocks.Pagination;
+global using BuildingBlocks.Exceptions;
+global using BuildingBlocks.Validations;
 global using MediatR;
 global using Order.Domain.AggregateModels.CustomerAggregate;
 global using Order.Domain.AggregateModels.OrderAggregate;

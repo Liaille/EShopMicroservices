@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Order.Application.Queries.OrderAggregate.GetOrdersByOrderName;
+﻿using Order.Application.Queries.OrderAggregate.GetOrdersByOrderName;
 
 namespace Order.API.Endpoints.V1.Orders;
 

@@ -12,10 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Behaviors\" />
     <Folder Include="Events\ApplicationEvents\Handlers\" />
     <Folder Include="Interfaces\Services\" />
     <Folder Include="Services\" />
-    <Folder Include="Behaviors\" />
   </ItemGroup>
 
   <ItemGroup>

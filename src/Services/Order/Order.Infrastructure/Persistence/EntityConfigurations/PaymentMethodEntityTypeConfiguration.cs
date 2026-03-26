@@ -26,7 +26,7 @@ internal class PaymentMethodEntityTypeConfiguration : IEntityTypeConfiguration<P
         // 满足以下条件则仅在聚合根侧做完整的单向配置
         // 1.子实体有显式的外键属性
         // 2.仅通过聚合根操作子实体
-        // 3.无需再子实体侧添加额外约束(如级联删除、外键非空)
+        // 3.无需在子实体侧添加额外约束(如级联删除、外键非空)
         builder.HasOne<Customer>()
             .WithMany(c => c.PaymentMethods)
             .HasForeignKey("CustomerId")

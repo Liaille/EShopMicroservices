@@ -1,6 +1,4 @@
-﻿using Order.Application.Interfaces.Repositories;
-
-namespace Order.Application.Commands.OrderAggregate.CreateOrder;
+﻿namespace Order.Application.Commands.OrderAggregate.CreateOrder;
 
 public class CreateOrderHandler(IOrderDbContext dbContext) : ICommandHandler<CreateOrderCommand, CreateOrderResult>
 {

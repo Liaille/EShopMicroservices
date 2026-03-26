@@ -1,4 +1,4 @@
-﻿namespace Order.Application.Queries.GetOrders;
+﻿namespace Order.Application.Queries.OrderAggregate.GetOrders;
 
 public record GetOrdersQuery(PaginationRequest PaginationRequest) : IQuery<GetOrdersResult>;
 

@@ -1,4 +1,4 @@
-﻿using Order.Application.Queries.GetOrders;
+﻿using Order.Application.Queries.OrderAggregate.GetOrders;
 
 namespace Order.API.Endpoints.V1.Orders;
 

@@ -1,8 +1,11 @@
-﻿namespace Order.Domain.AggregateModels.OrderAggregate;
+﻿using System.Text.Json.Serialization;
+
+namespace Order.Domain.AggregateModels.OrderAggregate;
 
 /// <summary>
 /// 订单状态枚举
 /// </summary>
+[JsonConverter(typeof(JsonStringEnumConverter))]
 public enum OrderStatus
 {
     /// <summary>

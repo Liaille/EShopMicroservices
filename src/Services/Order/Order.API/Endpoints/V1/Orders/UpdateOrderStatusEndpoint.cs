@@ -8,7 +8,7 @@ public class UpdateOrderStatusEndpoint : ICarterModule
     {
         app.MapPatch("/api/v1/orders/{id:guid}/status", async (
             Guid id,
-            UpdateOrderStatusRequest request,
+            [FromBody] UpdateOrderStatusRequest request,
             ISender sender,
             CancellationToken cancellationToken) =>
         {

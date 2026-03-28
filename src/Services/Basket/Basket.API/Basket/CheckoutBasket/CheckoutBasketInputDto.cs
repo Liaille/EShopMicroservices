@@ -1,12 +1,6 @@
-﻿namespace BuildingBlocks.EventBus.Events.Basket;
+﻿namespace Basket.API.Basket.CheckoutBasket;
 
-/// <summary>
-/// 购物车结账集成事件
-/// <para>由购物车服务(Basket.API)在用户提交订单时发布</para>
-/// <para>订单服务(Order.API)订阅并消费，用于创建订单</para>
-/// <para>注意：商品明细通过调用购物车API获取，不包含在事件中</para>
-/// </summary>
-public record BasketCheckoutIntegrationEvent : IntegrationEvent
+public record CheckoutBasketInputDto
 {
     /// <summary>
     /// 用户名（用于唯一标识用户购物车）
@@ -40,11 +34,6 @@ public record BasketCheckoutIntegrationEvent : IntegrationEvent
     public string ShippingEmail { get; init; } = string.Empty;
 
     /// <summary>
-    /// 收货地址
-    /// </summary>
-    public string ShippingAddressLine { get; init; } = string.Empty;
-
-    /// <summary>
     /// 收货国家
     /// </summary>
     public string ShippingCountry { get; init; } = string.Empty;
@@ -53,6 +42,11 @@ public record BasketCheckoutIntegrationEvent : IntegrationEvent
     /// 收货省份/州
     /// </summary>
     public string ShippingState { get; init; } = string.Empty;
+
+    /// <summary>
+    /// 收货地址
+    /// </summary>
+    public string ShippingAddressLine { get; init; } = string.Empty;
 
     /// <summary>
     /// 收货邮编
@@ -77,11 +71,6 @@ public record BasketCheckoutIntegrationEvent : IntegrationEvent
     public string BillingEmail { get; init; } = string.Empty;
 
     /// <summary>
-    /// 账单地址
-    /// </summary>
-    public string BillingAddressLine { get; init; } = string.Empty;
-
-    /// <summary>
     /// 账单国家
     /// </summary>
     public string BillingCountry { get; init; } = string.Empty;
@@ -90,6 +79,11 @@ public record BasketCheckoutIntegrationEvent : IntegrationEvent
     /// 账单省份/州
     /// </summary>
     public string BillingState { get; init; } = string.Empty;
+
+    /// <summary>
+    /// 账单地址
+    /// </summary>
+    public string BillingAddressLine { get; init; } = string.Empty;
 
     /// <summary>
     /// 账单邮编

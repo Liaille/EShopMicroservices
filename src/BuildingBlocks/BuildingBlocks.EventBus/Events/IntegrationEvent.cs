@@ -1,6 +1,6 @@
 ﻿namespace BuildingBlocks.EventBus.Events;
 
-public record IntegrationEvent
+public record IntegrationEvent : IIntegrationEvent
 {
     public Guid Id { get; init; }
 

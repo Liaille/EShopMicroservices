@@ -1,9 +1,13 @@
-﻿using BuildingBlocks.Behaviors;
+﻿using Basket.API.Mappings;
+using BuildingBlocks.Behaviors;
+using BuildingBlocks.EventBus.MassTransit;
 using BuildingBlocks.Exceptions.Handler;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
+
 // 向容器中添加服务。
 // 一个为ASP.NET Core最小API提供拓展功能和模块化的轻量级框架
 // Carter包若安装在其他引用项目中则无法识别继承了ICarterModule的API
@@ -21,6 +25,8 @@ builder.Services.AddMediatR(config =>
     // 将日志行为添加到MediatR的管道中
     config.AddOpenBehavior(typeof(LoggingBehavior<,>));
 });
+// 注册Request -> Command 映射器
+builder.Services.AddRequestMappings();
 // 注册FluentValidation验证器
 builder.Services.AddValidatorsFromAssembly(assembly);
 // 注册全局异常处理
@@ -62,6 +68,8 @@ builder.Services.AddGrpcClient<Discount.Grpc.DiscountProtoService.DiscountProtoS
     };
     return handler;
 });
+// 注册事件总线服务
+builder.Services.AddEventBus(builder.Configuration, assembly);
 // 注册健康检查服务
 builder.Services.AddHealthChecks()
     .AddNpgSql(dbConnectionString)

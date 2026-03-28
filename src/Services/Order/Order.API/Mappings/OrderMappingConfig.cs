@@ -8,7 +8,7 @@ namespace Order.API.Mappings;
 
 public static class OrderMappingConfig
 {
-    public static void RegisterOrderMappings(this IServiceCollection services)
+    public static void AddRequestMappings(this IServiceCollection services)
     {
         // 手动配置映射Request内部所有字段到xxxInputDto
         TypeAdapterConfig<CreateOrderRequest, CreateOrderCommand>

@@ -2,6 +2,7 @@
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Order.API.Mappings;
+using Order.API.Services;
 using System.Text.Json.Serialization;
 
 namespace Order.API;
@@ -20,12 +21,14 @@ public static class DependencyInjection
 
         services.AddCarter();
 
-        services.RegisterOrderMappings();
+        services.AddRequestMappings();
 
         services.AddExceptionHandler<GlobalExceptionHandler>();
 
         services.AddHealthChecks()
             .AddSqlServer(configuration.GetConnectionString("Database")!);
+
+        services.AddHttpClient<IBasketService, BasketService>(client => client.BaseAddress = new Uri(configuration["ApiUrls:BasketAPI"]!));
 
         return services;
     }

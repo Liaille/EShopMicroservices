@@ -1,6 +1,6 @@
 ﻿using Basket.API.Mappings;
 using BuildingBlocks.Behaviors;
-using BuildingBlocks.EventBus.MassTransit;
+using EventBus.MassTransit;
 using BuildingBlocks.Exceptions.Handler;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;

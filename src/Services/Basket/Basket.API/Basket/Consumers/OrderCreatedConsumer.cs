@@ -1,4 +1,4 @@
-﻿using BuildingBlocks.EventBus.Events.Order;
+﻿using EventBus.Events.Order;
 using MassTransit;
 
 namespace Basket.API.Basket.Consumers;

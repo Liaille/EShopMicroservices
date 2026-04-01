@@ -1,14 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore.Diagnostics;
+﻿using EventBus.Abstractions;
+using EventBus.MassTransit;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Order.Application.Interfaces.Repositories;
+using Order.Infrastructure.EventBus;
 using Order.Infrastructure.Persistence.Interceptors;
 using Order.Infrastructure.Persistence.Seeds;
+using System.Reflection;
 
 namespace Order.Infrastructure;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration, bool isDevelopment)
+    public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration, Assembly consumerAssembly, bool isDevelopment)
     {
         var connectionString = configuration.GetConnectionString("Database");
 
@@ -36,6 +40,10 @@ public static class DependencyInjection
         {
             services.AddMigration<OrderDbContext>();
         }
+
+        services.AddScoped<IEventBus, MassTransitEventBus>();
+
+        services.AddEventBus(configuration, consumerAssembly);
 
         return services;
     }

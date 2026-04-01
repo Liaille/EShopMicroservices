@@ -1,9 +1,11 @@
 ﻿using BuildingBlocks.Exceptions.Handler;
+using EventBus.MassTransit;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Order.API.Mappings;
 using Order.API.Services;
 using System.Text.Json.Serialization;
+using System.Reflection;
 
 namespace Order.API;
 
@@ -27,6 +29,8 @@ public static class DependencyInjection
 
         services.AddHealthChecks()
             .AddSqlServer(configuration.GetConnectionString("Database")!);
+
+        services.AddEventBus(configuration, Assembly.GetExecutingAssembly());
 
         services.AddHttpClient<IBasketService, BasketService>(client => client.BaseAddress = new Uri(configuration["ApiUrls:BasketAPI"]!));
 

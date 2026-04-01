@@ -2,6 +2,8 @@
 global using BuildingBlocks.Pagination;
 global using BuildingBlocks.Exceptions;
 global using BuildingBlocks.Validations;
+global using EventBus.Abstractions;
+global using EventBus.Events.Order;
 global using MediatR;
 global using Order.Domain.AggregateModels.CustomerAggregate;
 global using Order.Domain.AggregateModels.OrderAggregate;
@@ -13,3 +15,4 @@ global using Order.Application.Interfaces.Repositories;
 global using Order.Application.Extensions;
 global using Microsoft.Extensions.Logging;
 global using Microsoft.EntityFrameworkCore;
+global using Microsoft.FeatureManagement;

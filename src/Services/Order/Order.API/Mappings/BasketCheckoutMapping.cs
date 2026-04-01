@@ -1,4 +1,4 @@
-﻿using BuildingBlocks.EventBus.Events.Basket;
+﻿using EventBus.Events.Basket;
 using Order.API.Consumers.Dtos;
 using Order.Application.Commands.OrderAggregate.CreateOrder;
 

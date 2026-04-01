@@ -8,12 +8,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\BuildingBlocks\BuildingBlocks\BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\EventBus.csproj" />
     <ProjectReference Include="..\Order.Domain\Order.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Behaviors\" />
-    <Folder Include="Events\ApplicationEvents\Handlers\" />
+    <Folder Include="Events\IntegrationEvents\Handlers\" />
     <Folder Include="Interfaces\Services\" />
     <Folder Include="Services\" />
   </ItemGroup>

@@ -92,6 +92,7 @@ public class DispatchDomainEventsInterceptor(IMediator mediator, ILogger<Dispatc
             try
             {
                 await mediator.Publish(domainEvent, cancellationToken);
+
                 if (logger.IsEnabled(LogLevel.Information))
                     logger.LogInformation(
                     "Domain event {EventTypeName} (EventId: {EventId}) of aggregate root {AggregateRootId} published successfully.",

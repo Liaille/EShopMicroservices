@@ -1,4 +1,4 @@
-﻿using BuildingBlocks.EventBus.Events.Basket;
+﻿using EventBus.Events.Basket;
 using MassTransit;
 
 namespace Basket.API.Basket.CheckoutBasket;

@@ -30,6 +30,8 @@ public static class DependencyInjection
         services.AddPermissionValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         // 注册所有业务验证器
         services.AddBusinessValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+        // 注册特性管理服务
+        services.AddFeatureManagement();
 
         return services;
     }

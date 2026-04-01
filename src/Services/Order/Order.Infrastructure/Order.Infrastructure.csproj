@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BuildingBlocks\BuildingBlocks.EventBus\BuildingBlocks.EventBus.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\EventBus.MassTransit\EventBus.MassTransit.csproj" />
     <ProjectReference Include="..\Order.Application\Order.Application.csproj" />
   </ItemGroup>
 

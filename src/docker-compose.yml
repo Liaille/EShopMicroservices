@@ -32,7 +32,14 @@ services:
   eventbus:
     image: rabbitmq:management
 
+  order.api:
+    image: ${DOCKER_REGISTRY-}orderapi
+    build:
+      context: .
+      dockerfile: Services/Order/Order.API/Dockerfile
+
 volumes:
   postgres_catalog:
   postgres_basket:
+
 

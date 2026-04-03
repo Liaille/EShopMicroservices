@@ -50,10 +50,14 @@ services:
       - ConnectionStrings__Database=Server=basketdb;Port=5432;Database=BasketDb;User Id=postgres;Password=postgres;Include Error Detail=true
       - ConnectionStrings__Redis=distributedcache:6379
       - GrpcSettings__DiscountUrl=https://discount.grpc:8081
+      - EventBus__Host=amqp://ecommerce-mq:5672
+      - EventBus__UserName=guest
+      - EventBus__Password=guest
     depends_on:
       - basketdb
       - distributedcache
       - discount.grpc
+      - eventbus
     ports:
       - "6001:8080"
       - "6061:8081"
@@ -95,3 +99,27 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+  
+  order.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - ConnectionStrings__Database=Server=orderdb;Database=OrderDb;User Id=sa;Password=Pwd123456;Encrypt=False;TrustServerCertificate=True
+      - EventBus__Host=amqp://ecommerce-mq:5672
+      - EventBus__UserName=guest
+      - EventBus__Password=guest
+      - FeatureManagement__OrderFullfilment=true
+      - ApiUrls__BasketAPI=basket.api:8081
+    depends_on:
+      - orderdb
+      - eventbus
+      - basket.api
+    ports:
+      - "6003:8080"
+      - "6063:8081"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro

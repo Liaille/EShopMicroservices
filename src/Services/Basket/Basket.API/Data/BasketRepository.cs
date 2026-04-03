@@ -1,12 +1,10 @@
-﻿using Basket.API.Exceptions;
-
-namespace Basket.API.Data;
+﻿namespace Basket.API.Data;
 
 public class BasketRepository(IDocumentSession session) : IBasketRepository
 {
-    public async Task<ShoppingCart> GetShoppingCartAsync(string userName, CancellationToken cancellationToken = default)
+    public async Task<ShoppingCart?> GetShoppingCartAsync(string userName, CancellationToken cancellationToken = default)
     {
-        return await session.LoadAsync<ShoppingCart>(userName, cancellationToken) ?? throw new BasketNotFoundException(userName);
+        return await session.LoadAsync<ShoppingCart>(userName, cancellationToken);
     }
 
     public async Task<ShoppingCart> UpsertShoppingCartAsync(ShoppingCart cart, CancellationToken cancellationToken = default)

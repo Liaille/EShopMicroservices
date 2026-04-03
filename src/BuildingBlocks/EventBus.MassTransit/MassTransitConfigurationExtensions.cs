@@ -7,6 +7,8 @@ namespace EventBus.MassTransit;
 
 public static class MassTransitConfigurationExtensions
 {
+    private static readonly List<Assembly> _consumerAssemblies = [];
+
     /// <summary>
     /// 注册 MassTransit + RabbitMQ 消息总线
     /// </summary>
@@ -18,6 +20,10 @@ public static class MassTransitConfigurationExtensions
         IConfiguration configuration,
         Assembly? consumerAssembly = null)
     {
+        if (consumerAssembly != null) _consumerAssemblies.Add(consumerAssembly);
+
+        if (services.Any(s => s.ServiceType == typeof(IBus))) return services;
+
         // 强类型绑定消息队列配置
         var eventBusOptions = configuration
             .GetSection("EventBus")
@@ -29,8 +35,8 @@ public static class MassTransitConfigurationExtensions
             busConfig.SetKebabCaseEndpointNameFormatter();
 
             // 自动扫描所有IConsumer<>并注册消费者（如果传入了程序集）
-            if (consumerAssembly != null)
-                busConfig.AddConsumers(consumerAssembly);
+            if (_consumerAssemblies.Count != 0)
+                busConfig.AddConsumers(_consumerAssemblies.ToArray());
 
             // 使用 RabbitMQ 作为消息传输载体
             busConfig.UsingRabbitMq((context, cfg) =>

@@ -48,7 +48,9 @@ public static class BasketCheckoutMapping
     // 映射订单项 
     public static IReadOnlyList<OrderItemDto> ToOrderItemsDto(this ShoppingCartDto cartDto)
     {
-        return [.. cartDto.Items.Select(i => new OrderItemDto(
+        var items = cartDto.Items ?? [];
+
+        return [.. items.Select(i => new OrderItemDto(
             ProductId: i.ProductId,
             Quantity: i.Quantity,
             Price: i.Price

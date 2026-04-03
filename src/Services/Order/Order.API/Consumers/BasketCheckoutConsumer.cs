@@ -13,6 +13,19 @@ public sealed class BasketCheckoutConsumer(
     public async Task Consume(ConsumeContext<BasketCheckoutIntegrationEvent> context)
     {
         var eventMessage = context.Message;
+        if (eventMessage is null)
+        {
+            if (logger.IsEnabled(LogLevel.Error))
+                logger.LogError("Received null BasketCheckoutIntegrationEvent message");
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(eventMessage.UserName))
+        {
+            if (logger.IsEnabled(LogLevel.Error))
+                logger.LogError("Received BasketCheckoutIntegrationEvent with empty UserName");
+            return;
+        }
 
         if (logger.IsEnabled(LogLevel.Information))
             logger.LogInformation("Starting to process the BasketCheckoutIntegrationEvent for user: {UserName}", eventMessage.UserName);
@@ -21,7 +34,7 @@ public sealed class BasketCheckoutConsumer(
         {
             var shoppingCart = await basketService.GetBasketAsync(eventMessage.UserName);
 
-            if (shoppingCart is null || shoppingCart.Items.Count == 0)
+            if (shoppingCart is null || shoppingCart.Items is null || shoppingCart.Items.Count == 0)
             {
                 if (logger.IsEnabled(LogLevel.Error))
                     logger.LogError("The shopping cart is empty, unable to create an order for user: {UserName}", eventMessage.UserName);

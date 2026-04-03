@@ -1,4 +1,4 @@
-﻿namespace Order.Application.Events.ApplicationEvents.Handlers;
+﻿namespace Order.Application.Events.DomainEvents.Handlers;
 
 public class OrderCreatedDomainEventHandler(
     IOrderDbContext dbContext,
